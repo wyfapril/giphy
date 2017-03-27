@@ -64,19 +64,33 @@
         .done(function(response) {
           
           console.log(queryURL);
+          console.log('response');
           console.log(response);
 
-          var reactionDiv = $("<div class='reaction'>");
+          var data = response.data;
+          for (var i=0; i<data.length; i++){
 
-          var rating = $("<p>").text("Rating: " + response.rating);
-          reactionDiv.append(rating);
+            var reactionDiv = $("<div class='reaction'>");
+            var rating = $("<p>").text("Rating: " + data[i].images.rating);
+            var imgURL = data[i].images.fixed_height.url;
+            var reactionImage = $("<img>").attr("src", imgURL);
+            reactionDiv.append(rating);
+            reactionDiv.append(reactionImage);
+console.log(reactionDiv);
+            $("#reactions-view").prepend(reactionDiv);
+          }
 
-          var imgURL = response.images;
-          //var imgURL = response.images.fixed_height.url
-          var reactionImage = $("<img>").attr("src", imgURL);
-          reactionDiv.append(reactionImage);
 
-          $("#gifs-show-here").prepend(reactionDiv);
+
+          // var rating = $("<p>").text("Rating: " + response.rating);
+          // reactionDiv.append(rating);
+
+          // var imgURL = response.images;
+          // //var imgURL = response.images.fixed_height.url
+          // var reactionImage = $("<img>").attr("src", imgURL);
+          // reactionDiv.append(reactionImage);
+
+          // $("#gifs-show-here").prepend(reactionDiv);
         });
 
       }
