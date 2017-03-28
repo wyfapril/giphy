@@ -52,7 +52,7 @@
 
     <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script type="text/javascript">
-      var reactions = ["YAY~", "Sob sob", "Eek!", "AAAAH!!!", "Intarasting..."];
+      var reactions = ["YAY~", "Sob sob", "Eek!", "AAAAH!!!", "Interesting..."];
 
       function displayReactions() {
 
@@ -71,26 +71,15 @@
           for (var i=0; i<data.length; i++){
 
             var reactionDiv = $("<div class='reaction'>");
-            var rating = $("<p>").text("Rating: " + data[i].images.rating);
-            var imgURL = data[i].images.fixed_height.url;
-            var reactionImage = $("<img>").attr("src", imgURL);
+            var rating = $("<p>").text("Rating: " + data[i].rating);
+            var imgURL = data[i].images.fixed_height_still.url;
+            var reactionImage = $("<img>").attr({src: imgURL, "data-state": "still"});
+            //$("img").addClass("still");
             reactionDiv.append(rating);
             reactionDiv.append(reactionImage);
 console.log(reactionDiv);
             $("#reactions-view").prepend(reactionDiv);
           }
-
-
-
-          // var rating = $("<p>").text("Rating: " + response.rating);
-          // reactionDiv.append(rating);
-
-          // var imgURL = response.images;
-          // //var imgURL = response.images.fixed_height.url
-          // var reactionImage = $("<img>").attr("src", imgURL);
-          // reactionDiv.append(reactionImage);
-
-          // $("#gifs-show-here").prepend(reactionDiv);
         });
 
       }
@@ -121,6 +110,26 @@ console.log(reactionDiv);
       $(document).on("click", ".reaction", displayReactions);
 
       renderButtons();
+
+      $("img").on("click", function(){
+        var state = $(this).attr("data-state");
+        if (state == "still") {
+          imgURL = data[i].images.fixed_height.url;
+          $(this).attr("src", imgURL);
+          console.log("image URL: " + imgURL);
+          $(this).attr("data-state", "animate");
+          console.log("data-state");
+        } else {
+          imgURL = data[i].images.fixed_height_still.url;
+          $(this).attr("src", imgURL);
+          console.log("image URL: " + imgURL);
+          $(this).attr("data-state", "still");
+          console.log("data-state");
+        }
+      })
+
+
+
     </script>
   </div>
 </body>
